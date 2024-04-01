@@ -31,12 +31,12 @@ export default function SignIn() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
-      if (data.success === false) {
+      if (data.succes === false) {
         dispatch(signInFailure(data.message));
         return;
       }
       dispatch(signInSuccess(data));
+      console.log('sign in success!');
       navigate('/');
     } catch (error) {
       dispatch(signInFailure(error.message));
