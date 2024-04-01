@@ -7,12 +7,21 @@
 <br>
 -----------------------------------
 
-1- create .env file in the root folder and add :
-    * MONGO (mongo db access route)
-    * JWT_SECRET
-<br>
-2- create .env file inside client folder and add:
-    * VITE_FIREBASE_API_KEY
+<ol>
+    <li> create .env file in the root folder and add : 
+        <ul>
+            <li>MONGO (mongo db access route)</li>
+            <li>JWT_SECRET</li>
+        </ul>
+    </li>
+    <br>
+    <li> create .env file inside client folder and add:
+        <ul>
+            <li>VITE_FIREBASE_API_KEY</li>
+        </ul>
+    </li>
+</ol>
+
 -----------------------------------
 <h2> run: npm run dev in both client and api, then access the localhost:5173</h2>
 
