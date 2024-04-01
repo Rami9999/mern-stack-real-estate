@@ -1,5 +1,5 @@
 
-<h1>MERN STACK AUTH</h1>
+<h1>RumaEstate, Fullstack MERN Estate Project</h1>
 ##################################
 <h2>First: clone the project</h2>
 <br>
