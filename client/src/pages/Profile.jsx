@@ -15,6 +15,8 @@ export default function Profile() {
   const [updateSuccess,setUpdateSuccess] = useState(false);
   const [showListingsError,setShowListingsError] = useState(false);
   const [userListings,setUserListings] = useState([]);
+  const [deleteListing,setDeleteListing] = useState(false);
+  const [showListing,setShowListing] = useState(false);
   const dispatch = useDispatch();
   useEffect(()=>{
     if(file)
@@ -115,6 +117,7 @@ export default function Profile() {
   }
 
   const handleShowListings = async () =>{
+    setShowListing(true)
     try{
       setShowListingsError(false);
       const res = await fetch(`/api/user/listing/${currentUser._id}`);
@@ -129,6 +132,28 @@ export default function Profile() {
     }catch(error)
     {
       setShowListingsError(true);
+    }
+  }
+
+  const handleDeleteListing = async (listingId) => {
+    try{
+      setDeleteListing(false);
+      const res = await fetch(`/api/listing/delete/${listingId}`,{
+        method:'DELETE'
+      });
+      const data = await res.json();
+      if(data.success == false)
+      {
+        setDeleteListing(false);
+        console.log(data.message);
+        return;
+      }
+      setUserListings((prev) => prev.filter((listing)=>listing._id !== listingId));
+      setDeleteListing(true);
+    }catch(error)
+    {
+      console.log(error.message);
+      setDeleteListing(false);
     }
   }
   return (
@@ -193,6 +218,7 @@ export default function Profile() {
       {userListings.length>0 &&
         <div className=' flex flex-col gap-4'>
           <h1 className='text-center mt-7 text-2xl font-semibold'>Your Listings</h1>
+          <p className='text-green-700 mt-5 text-center'>{deleteListing ? 'Listing Has been deleted Successfully!' : ''}</p>
           {userListings.map((listing)=>
             <div key={listing._id} className='flex border gap-4 rounded-lg p-3 justify-between items-center'>
               <Link to={`/listing/${listing._id}`}>
@@ -203,13 +229,18 @@ export default function Profile() {
               </Link>
 
               <div className='flex flex-col items-center'>
-                <button className='text-red-700 uppercase'>Delete</button>
+                <button onClick={()=>handleDeleteListing(listing._id)} className='text-red-700 uppercase'>Delete</button>
                 <button className='text-green-700 uppercase'>Edit</button>
               </div>
             </div>
           )}
         </div>
       }
+      {showListing && userListings.length == 0 && (
+        <div className='flex flex-col'>
+          <h1 className='text-center mt-7 text-xl font-semibold'>You dont have listing to show right now!</h1>
+        </div>
+      )}
     </div>
   )
 }
