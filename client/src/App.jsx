@@ -9,6 +9,7 @@ import PrivateRoute from './components/PrivateRoute';
 import PrivateRouteSign from './components/PrivateRouteSign';
 import CreateListing from './pages/createListing';
 import UpdateListing from './pages/updateListing';
+import Listing from './pages/Listing';
 export default function App() {
 
   return <BrowserRouter>
@@ -33,7 +34,7 @@ export default function App() {
         <Route path="/update-listing/:listingId" element={<UpdateListing />}></Route>
 
       </Route>
-
+      <Route path="/listing/:listingId" element={<Listing />}/>
     </Routes>
   </BrowserRouter>;
 }
